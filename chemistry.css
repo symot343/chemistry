@@ -1,0 +1,34 @@
+#problem{
+    font-size:60px;
+    text-align: center;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+#problem_sub{
+    font-size:30px;
+    text-align: center;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+#status{
+    margin-top:-10px;
+    text-align: right;
+}
+
+.next_button{
+    text-align: right;
+}
+
+.choice {
+    width: 90px;
+    height: 50px;
+    margin: 5px;
+    cursor: pointer;
+    border: 1px solid black;
+    font-size: 18px;
+    color: black;
+    text-align: center;
+    padding: 3px;
+}
