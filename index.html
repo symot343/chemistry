@@ -15,6 +15,7 @@
         <p>Startで開始、化学物質名が表示される。
             <br>選択肢から色を当てる。
             <br>10問正解するスピードを競う。
+            <br>正解の表示は出ません。
         </p>
     </details>
 </div>
@@ -22,9 +23,11 @@
 <div class="start_button">
     <input type="button" id="start_button" value="Start"
     style="width:64px;height:32px;bottom:5px;position:relative">
-    <input type="button" id="quit_button" value="Quit" 
-    style="width:64px;height:32px;bottom:5px;position:relative">
-    <p id="problem_num">第0問</p>
+    <p>
+    <div id="problem_num">第0問</div>
+    <div id="correct">✅：0</div>
+    <div id="wrong">❎：0</div>
+    </p>
     <p id="status">開始前</p>
 </div>
 
@@ -53,16 +56,23 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     <input type="button" onclick="choiceButtonClick(this.id)" id="choice6" class="choice" value="赤色">
 </div>
 
+<div id="wrong_answers">
+<p>【あなたの間違い】</p>
+</div>
+
 <script>
     //id取得群
     let start_button = document.getElementById("start_button");
     let quit_button = document.getElementById("quit_button");
     let problem_num = document.getElementById("problem_num");
+    let correct = document.getElementById("correct");
+    let wrong = document.getElementById("wrong");
     let status = document.getElementById("status");
     let next_button = document.getElementById("next_button");
     let problem = document.getElementById("problem");
     let problem_sub = document.getElementById("problem_sub");
     let timer = document.getElementById("timer");
+    let wrong_answers = document.getElementById("wrong_answers");
     //値定義群
     let start_status = false;
     let next_status = false;
@@ -71,13 +81,14 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let startTime;
     let timeoutID;
     let stopTime=0;
+    let gameTime = 10000
     //問題集jsonしたい
     let questions = [
         { id: 0, name: "黒鉛", formula: "C", color: "黒色" },
         { id: 1, name: "ダイヤモンド", formula: "C", color: "無色" },
         { id: 2, name: "一酸化炭素", formula: "CO", color: "無色" },
         { id: 3, name: "二酸化炭素", formula: "CO2", color: "無色" },
-        { id: 4, name: "リチウムの炎色反応", formula: "K flame", color: "赤色" },
+        { id: 4, name: "リチウムの炎色反応", formula: "Li flame", color: "赤色" },
         { id: 5, name: "ナトリウムの炎色反応", formula: "Na flame", color: "黄色" },
         { id: 6, name: "カリウムの炎色反応", formula: "K flame", color: "赤紫色" },
         { id: 7, name: "銅の炎色反応", formula: "Cu flame", color: "青緑色" },
@@ -186,6 +197,10 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         b.style.border = "1px solid black"
     }
     function giveQuestion(){
+        //問題番号を増やす
+        let str = problem_num.textContent;
+        let num = Number(str.substring(1,str.length-1))+1;
+        problem_num.textContent = "第"+String(num)+"問";
         let index = Math.floor(Math.random()*questions.length);
         let question = questions[index];
         console.log(question)
@@ -244,33 +259,38 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         the_choice.style.border = "2px solid " + color_code[guess][0];
         the_choice.style.color = "black";
         if (guess == answer) {
-            alert("正解です")
-            next_status = true;
+            let str = correct.textContent;
+            let num = Number(str.substring(2,str.length))+1;
+            correct.textContent = "✅："+String(num);
+            giveQuestion();
         }
         else {
-            let send = "不正解、答えは" + answer + "でした"
-            alert(send)
-            gameover_status = true;
+            let str = wrong.textContent;
+            let num = Number(str.substring(2, str.length)) + 1;
+            wrong.textContent = "❎：" + String(num);
+            let new_element = document.createElement('p');
+            new_element.textContent = problem.textContent + "　：　" + answer;
+            wrong_answers.appendChild(new_element);
+            let send = "不正解、答えは" + answer + "でした";
+            alert(send);
+            next_status = true;
         }
     }
     function displayTime(){
-        const currentTime = new Date(Date.now()-startTime);
+        const currentTime = new Date(gameTime-Date.now()+startTime);
         const h = String(currentTime.getHours()).padStart(2, '0');
         const m = String(currentTime.getMinutes()).padStart(2, '0');
         const s = String(currentTime.getSeconds()).padStart(2, '0');
         const ms = String(currentTime.getMilliseconds()).padStart(3, '0');
         timer.textContent = `${m}:${s}.${ms}`;
+        if (m=="59"){
+            clearTimeout(timeoutID);
+            timer.textContent = "00:00.000";
+            status.textContent = "終了";
+            gameover_status = true;
+        }
         timeoutID = setTimeout(displayTime,10);
     }
-    function quitButtonClick(){
-        if (start_status){
-            start_status = false;
-            clearTimeout(timeoutID);
-            stopTime = Date.now()-startTime;
-            console.log(stopTime)
-        }
-    }
-    quit_button.onclick = quitButtonClick;
 </script>
 
 </body>
