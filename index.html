@@ -22,9 +22,14 @@
 <div class="start_button">
     <input type="button" id="start_button" value="Start"
     style="width:64px;height:32px;bottom:5px;position:relative">
+    <input type="button" id="quit_button" value="Quit" 
+    style="width:64px;height:32px;bottom:5px;position:relative">
     <p id="problem_num">第0問</p>
     <p id="status">開始前</p>
 </div>
+
+
+<div id="timer">00:00.000</div>
 
 <div class="problem_space"
 style="padding:10px;margin-bottom:10px;border:1px solid #333333">
@@ -51,16 +56,21 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
 <script>
     //id取得群
     let start_button = document.getElementById("start_button");
+    let quit_button = document.getElementById("quit_button");
     let problem_num = document.getElementById("problem_num");
     let status = document.getElementById("status");
     let next_button = document.getElementById("next_button");
     let problem = document.getElementById("problem");
     let problem_sub = document.getElementById("problem_sub");
+    let timer = document.getElementById("timer");
     //値定義群
     let start_status = false;
     let next_status = false;
     let gameover_status = false;
     let answer = "無色";
+    let startTime;
+    let timeoutID;
+    let stopTime=0;
     //問題集jsonしたい
     let questions = [
         { id: 0, name: "黒鉛", formula: "C", color: "黒色" },
@@ -144,6 +154,9 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             alert("すでに始まっています")
         }else{
             start_status = true;
+            startTime = Date.now();
+            console.log(startTime)
+            displayTime();
             status.textContent = "回答中";
             //出題開始
             giveQuestion();
@@ -240,6 +253,24 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             gameover_status = true;
         }
     }
+    function displayTime(){
+        const currentTime = new Date(Date.now()-startTime);
+        const h = String(currentTime.getHours()).padStart(2, '0');
+        const m = String(currentTime.getMinutes()).padStart(2, '0');
+        const s = String(currentTime.getSeconds()).padStart(2, '0');
+        const ms = String(currentTime.getMilliseconds()).padStart(3, '0');
+        timer.textContent = `${m}:${s}.${ms}`;
+        timeoutID = setTimeout(displayTime,10);
+    }
+    function quitButtonClick(){
+        if (start_status){
+            start_status = false;
+            clearTimeout(timeoutID);
+            stopTime = Date.now()-startTime;
+            console.log(stopTime)
+        }
+    }
+    quit_button.onclick = quitButtonClick;
 </script>
 
 </body>
