@@ -80,7 +80,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
 
 <div class="center">
 <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL"
-    data-url="https://developers.line.biz/ja/docs/line-social-plugins/install-guide/using-line-share-buttons/"
+    data-url="https://symot343.github.io/chemistry/"
     data-color="default" data-size="large" data-count="false" data-ver="3" style="display: none;"></div>
 <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async"
     defer="defer"></script>
@@ -91,6 +91,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     <table id="wrong_answers">
         <tr class="rowA">
             <th>問題</th>
+            <th>化学式</th>
             <th>あなたの回答</th>
             <th>解答</th>
         </tr>
@@ -312,12 +313,15 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             let new_element = document.createElement('tr');
             new_element.className = "rowB";
             let new_element_p = document.createElement('td');
+            let new_element_s = document.createElement('td');
             let new_element_g = document.createElement('td');
             let new_element_a = document.createElement('td');
             new_element_p.textContent = problem.textContent;
+            new_element_s.textContent = problem_sub.textContent;
             new_element_g.textContent = guess;
             new_element_a.textContent = answer;
             new_element.appendChild(new_element_p);
+            new_element.appendChild(new_element_s);
             new_element.appendChild(new_element_g);
             new_element.appendChild(new_element_a);
             wrong_answers.appendChild(new_element);
@@ -336,12 +340,15 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             let new_element = document.createElement('tr');
             new_element.className = "rowC";
             let new_element_p = document.createElement('td');
+            let new_element_s = document.createElement('td');
             let new_element_g = document.createElement('td');
             let new_element_a = document.createElement('td');
             new_element_p.textContent = problem.textContent;
+            new_element_s.textContent = problem_sub.textContent;
             new_element_g.textContent = guess;
             new_element_a.textContent = answer;
             new_element.appendChild(new_element_p);
+            new_element.appendChild(new_element_s);
             new_element.appendChild(new_element_g);
             new_element.appendChild(new_element_a);
             wrong_answers.appendChild(new_element);
@@ -384,15 +391,17 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             let new_element = document.createElement('tr');
             new_element.className = "rowD";
             let new_element_p = document.createElement('td');
+            let new_element_s = document.createElement('td');
             let new_element_g = document.createElement('td');
             let new_element_a = document.createElement('td');
             new_element_p.textContent = problem.textContent;
+            new_element_s.textContent = problem_sub.textContent;
             new_element_g.textContent = "no_guess";
             new_element_a.textContent = answer;
             new_element.appendChild(new_element_p);
+            new_element.appendChild(new_element_s);
             new_element.appendChild(new_element_g);
             new_element.appendChild(new_element_a);
-            wrong_answers.appendChild(new_element);
             alert("ゲームオーバー、結果を確認してね")
             gameover_status = true;
         }
