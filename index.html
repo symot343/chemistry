@@ -57,10 +57,6 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     <input type="button" onclick="choiceButtonClick(this.id)" id="choice6" class="choice" value="赤色">
 </div>
 
-<div id="wrong_answers">
-<p>【あなたの間違い】</p>
-</div>
-
 <div class="button-container">
     <label class="button-sample1" for="popupFlag1">結果を表示</label>
 </div>
@@ -77,6 +73,17 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         <h4 class="h4" id="score_display">0</h4>
         この結果をLINEでシェアしよう
     </div>
+</div>
+
+<div>
+    <p>【問題一覧】</p>
+    <table id="wrong_answers">
+        <tr class="rowA">
+            <th>問題</th>
+            <th>あなたの回答</th>
+            <th>解答</th>
+        </tr>
+    </table>
 </div>
 
 <script>
@@ -103,7 +110,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let startTime;
     let timeoutID;
     let stopTime=0;
-    let gameTime = 10000
+    let gameTime = 60000
     let givenTime = 0;
     //問題集jsonしたい
     let questions = [
@@ -290,19 +297,42 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             console.log(add);
             score.textContent = String(ns+add);
             str = correct.textContent;
+            //追加
+            let new_element = document.createElement('tr');
+            new_element.className = "rowB";
+            let new_element_p = document.createElement('td');
+            let new_element_g = document.createElement('td');
+            let new_element_a = document.createElement('td');
+            new_element_p.textContent = problem.textContent;
+            new_element_g.textContent = guess;
+            new_element_a.textContent = answer;
+            new_element.appendChild(new_element_p);
+            new_element.appendChild(new_element_g);
+            new_element.appendChild(new_element_a);
+            wrong_answers.appendChild(new_element);
             let num = Number(str.substring(2,str.length))+1;
             correct.textContent = "✅："+String(num);
             giveQuestion();
         }
         else {
-            let add = 20000*prob_num*(-1);
+            let add = Math.floor(20000*(prob_num**0.8)*(-1));
             console.log(add);
             score.textContent = String(ns+add);
             let str = wrong.textContent;
             let num = Number(str.substring(2, str.length)) + 1;
             wrong.textContent = "❎：" + String(num);
-            let new_element = document.createElement('p');
-            new_element.textContent = problem.textContent + "　：　" + answer;
+            //追加
+            let new_element = document.createElement('tr');
+            new_element.className = "rowC";
+            let new_element_p = document.createElement('td');
+            let new_element_g = document.createElement('td');
+            let new_element_a = document.createElement('td');
+            new_element_p.textContent = problem.textContent;
+            new_element_g.textContent = guess;
+            new_element_a.textContent = answer;
+            new_element.appendChild(new_element_p);
+            new_element.appendChild(new_element_g);
+            new_element.appendChild(new_element_a);
             wrong_answers.appendChild(new_element);
             let send = "不正解、答えは" + answer + "でした";
             alert(send);
@@ -325,9 +355,25 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             let str2 = wrong.textContent;
             let num2 = Number(str2.substring(2,str2.length));
             solved_display.textContent = `${String(num1)}/${String(num1+num2)}問(${String(Math.floor(num1/(num1+num2)*100))}%)`
+            score_display.textContent = score.textContent;
+            //追加
+            let new_element = document.createElement('tr');
+            new_element.className = "rowD";
+            let new_element_p = document.createElement('td');
+            let new_element_g = document.createElement('td');
+            let new_element_a = document.createElement('td');
+            new_element_p.textContent = problem.textContent;
+            new_element_g.textContent = "no_guess";
+            new_element_a.textContent = answer;
+            new_element.appendChild(new_element_p);
+            new_element.appendChild(new_element_g);
+            new_element.appendChild(new_element_a);
+            wrong_answers.appendChild(new_element);
             gameover_status = true;
         }
-        timeoutID = setTimeout(displayTime,10);
+        if (!gameover_status){
+            timeoutID = setTimeout(displayTime, 10);
+        }
     }
 </script>
 

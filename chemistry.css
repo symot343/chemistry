@@ -17,6 +17,10 @@
     text-align: right;
 }
 
+#score{
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
 
 .next_button{
     text-align: right;
@@ -254,4 +258,33 @@ HTML CSSResult Skip Results Iframe EDIT ON
     margin-top:-20px;
 }
 
+table {
+    text-align: center;
+    width: 330px;
+}
 
+table th,
+td {
+    padding: 2px 2px;
+    font-size: 10px;
+}
+
+table td {
+    text-align: center;
+}
+
+.rowA {
+    background-color: #dedede;
+}
+
+.rowB {
+    background-color: #ffa8b2;
+}
+
+.rowC {
+    background-color: #ada6fc;
+}
+
+.rowD {
+    background-color: #ffffff;
+}
