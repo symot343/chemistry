@@ -87,6 +87,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let correct = document.getElementById("correct");
     let wrong = document.getElementById("wrong");
     let status = document.getElementById("status");
+    let score = document.getElementById("score");
     let next_button = document.getElementById("next_button");
     let problem = document.getElementById("problem");
     let problem_sub = document.getElementById("problem_sub");
@@ -103,6 +104,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let timeoutID;
     let stopTime=0;
     let gameTime = 10000
+    let givenTime = 0;
     //問題集jsonしたい
     let questions = [
         { id: 0, name: "黒鉛", formula: "C", color: "黒色" },
@@ -123,7 +125,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         { id: 15, name: "臭素", formula: "Br2", color: "赤褐色" },
         { id: 16, name: "ヨウ素", formula: "I2", color: "黒紫色" },
         { id: 17, name: "酸素", formula: "O2", color: "無色" },
-        { id: 18, name: "オゾン", formula: "O3", color: "淡青" },
+        { id: 18, name: "オゾン", formula: "O3", color: "淡青色" },
         { id: 19, name: "硫黄", formula: "S", color: "黄色" },
         { id: 20, name: "硫黄の燃焼時の炎", formula: "S flame", color: "青色" },
         { id: 21, name: "硫化水素", formula: "H2S", color: "無色" },
@@ -218,6 +220,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         b.style.border = "1px solid black"
     }
     function giveQuestion(){
+        givenTime = Date.now();
         //問題番号を増やす
         let str = problem_num.textContent;
         let num = Number(str.substring(1,str.length-1))+1;
@@ -250,11 +253,9 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             color_list_copy.splice(num,1);
         }
         console.log(answer)
-        console.log(choice_list)
         if (!choice_list.includes(answer)){
             choice_list[Math.floor(Math.random() * 6)] = answer;
         }
-        console.log(choice_list);
         //選択肢準備完了
         //色塗り
         for (let i=1;i<=6;i++){
@@ -279,13 +280,24 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         the_choice.style.background = "white";
         the_choice.style.border = "2px solid " + color_code[guess][0];
         the_choice.style.color = "black";
+        let ns = Number(score.textContent);
+        let nm = problem_num.textContent;
+        let prob_num = nm.substring(1, nm.length - 1);
         if (guess == answer) {
-            let str = correct.textContent;
+            let time = Date.now()-givenTime;
+            time = time**(1-(time/100000));
+            let add = Math.floor(1000*(5000/(time**0.6))*(prob_num**(0.3)));
+            console.log(add);
+            score.textContent = String(ns+add);
+            str = correct.textContent;
             let num = Number(str.substring(2,str.length))+1;
             correct.textContent = "✅："+String(num);
             giveQuestion();
         }
         else {
+            let add = 20000*prob_num*(-1);
+            console.log(add);
+            score.textContent = String(ns+add);
             let str = wrong.textContent;
             let num = Number(str.substring(2, str.length)) + 1;
             wrong.textContent = "❎：" + String(num);
@@ -310,9 +322,9 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             status.textContent = "終了";
             let str1 = correct.textContent;
             let num1 = Number(str1.substring(2,str1.length));
-            let str2 = problem_num.textContent;
-            let num2 = Number(str2.substring(1,str2.length-1));
-            solved_display.textContent = `${String(num1)}/${String(num2)}問(${String(Math.floor(num1/num2*100))}%)`
+            let str2 = wrong.textContent;
+            let num2 = Number(str2.substring(2,str2.length));
+            solved_display.textContent = `${String(num1)}/${String(num1+num2)}問(${String(Math.floor(num1/(num1+num2)*100))}%)`
             gameover_status = true;
         }
         timeoutID = setTimeout(displayTime,10);
