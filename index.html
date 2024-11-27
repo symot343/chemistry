@@ -55,6 +55,9 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     <input type="button" onclick="choiceButtonClick(this.id)" id="choice4" class="choice" value="無色">
     <input type="button" onclick="choiceButtonClick(this.id)" id="choice5" class="choice" value="青白色">
     <input type="button" onclick="choiceButtonClick(this.id)" id="choice6" class="choice" value="赤色">
+    <input type="button" onclick="choiceButtonClick(this.id)" id="choice7" class="choice" value="赤橙色">
+    <input type="button" onclick="choiceButtonClick(this.id)" id="choice8" class="choice" value="銀白色">
+    <input type="button" onclick="choiceButtonClick(this.id)" id="choice9" class="choice" value="白色">
 </div>
 
 <div class="button-container">
@@ -118,7 +121,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let startTime;
     let timeoutID;
     let stopTime=0;
-    let gameTime = 10000
+    let gameTime = 60000
     let givenTime = 0;
     //問題集jsonしたい
     let questions = [
@@ -262,18 +265,18 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         //５個選んでから答えと差し替えればいいじゃん
         let color_list_copy = structuredClone(color_list);
         let choice_list = []
-        for (let i=0;i<6;i++){
+        for (let i=0;i<9;i++){
             let num = Math.floor(Math.random()*color_list_copy.length);
             choice_list.push(color_list_copy[num]);
             color_list_copy.splice(num,1);
         }
         console.log(answer)
         if (!choice_list.includes(answer)){
-            choice_list[Math.floor(Math.random() * 6)] = answer;
+            choice_list[Math.floor(Math.random() * 9)] = answer;
         }
         //選択肢準備完了
         //色塗り
-        for (let i=1;i<=6;i++){
+        for (let i=1;i<=9;i++){
             colorButton("choice"+String(i),choice_list[i-1]);
         }
     }
