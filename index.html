@@ -75,6 +75,14 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     </div>
 </div>
 
+<div class="center">
+<div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL"
+    data-url="https://developers.line.biz/ja/docs/line-social-plugins/install-guide/using-line-share-buttons/"
+    data-color="default" data-size="large" data-count="false" data-ver="3" style="display: none;"></div>
+<script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async"
+    defer="defer"></script>
+</div>
+
 <div>
     <p>【問題一覧】</p>
     <table id="wrong_answers">
@@ -369,6 +377,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             new_element.appendChild(new_element_g);
             new_element.appendChild(new_element_a);
             wrong_answers.appendChild(new_element);
+            alert("ゲームオーバー、結果を確認してね")
             gameover_status = true;
         }
         if (!gameover_status){
