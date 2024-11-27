@@ -118,7 +118,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let startTime;
     let timeoutID;
     let stopTime=0;
-    let gameTime = 60000
+    let gameTime = 10000
     let givenTime = 0;
     //問題集jsonしたい
     let questions = [
@@ -356,6 +356,19 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         timer.textContent = `${m}:${s}.${ms}`;
         if (m=="59"){
             clearTimeout(timeoutID);
+            let score_send = score.textContent;
+            console.log(score_send);
+            fetch('https://script.google.com/macros/s/AKfycbwC4EySoHPpFf-XL3HL-fZNxh7C-6kYgKtcH1QKjHC7ZZMKb0IYUJ3ZyoQ9o1YmbSvi/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ score_send })
+            })
+                .then(response => response.text())
+                .then(data => {
+                });
             timer.textContent = "00:00.000";
             status.textContent = "終了";
             let str1 = correct.textContent;
