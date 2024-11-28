@@ -12,6 +12,15 @@
     margin-bottom:10px;
 }
 
+#name_input{
+    margin-bottom:20px;
+}
+
+.expl{
+    font-size: 10px;
+    margin-top:-20px;
+}
+
 #status{
     margin-top:-10px;
     text-align: right;
