@@ -80,7 +80,8 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         <h4 class="h4" id="solved_display">0/0問(0%)</h4>
         <h5>得点</h5>
         <h4 class="h4" id="score_display">0</h4>
-        この結果をLINEでシェアしよう
+        <h4>判定</h4>
+        <h2 id="rank_display">Fランク</h2>
     </div>
 </div>
 
@@ -185,6 +186,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let wrong_answers = document.getElementById("wrong_answers");
     let solved_display = document.getElementById("solved_display");
     let score_display = document.getElementById("score_display");
+    let rank_display = document.getElementById("rank_display");
     let name_input = document.getElementById("name_input");
     //値定義群
     let start_status = false;
@@ -541,6 +543,79 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             let num2 = Number(str2.substring(2,str2.length));
             solved_display.textContent = `${String(num1)}/${String(num1+num2)}問(${String(Math.floor(num1/(num1+num2)*100))}%)`
             score_display.textContent = score.textContent;
+            let s = Number(score.textContent);
+            let rank;
+            //ランク決め
+            if (s<=100000){
+                rank=="Fランク";
+            }
+            else if (s<=300000){
+                rank=="Eランク";
+            }
+            else if (s <= 500000) {
+                rank == "Dランク";
+            }
+            else if (s <= 700000) {
+                rank == "C-ランク";
+            }
+            else if (s <= 800000) {
+                rank == "Cランク";
+            }
+            else if (s <= 900000) {
+                rank == "C+ランク";
+            }
+            else if (s <= 1000000) {
+                rank == "B-ランク";
+            }
+            else if (s <= 1200000) {
+                rank == "Bランク";
+            }
+            else if (s <= 1400000) {
+                rank == "B+ランク";
+            }
+            else if (s <= 1600000) {
+                rank == "A-ランク";
+            }
+            else if (s <= 1800000) {
+                rank == "A+ランク";
+            }
+            else if (s <= 2000000) {
+                rank == "S-ランク";
+            }
+            else if (s <= 2200000) {
+                rank == "Sランク";
+            }
+            else if (s <= 2400000) {
+                rank == "S+ランク";
+            }
+            else if (s <= 2600000) {
+                rank == "SS-ランク";
+            }
+            else if (s <= 2800000) {
+                rank == "SSランク";
+            }
+            else if (s <= 3000000) {
+                rank == "SS+ランク";
+            }
+            else if (s <= 3200000) {
+                rank == "SSS-ランク";
+            }
+            else if (s <= 3400000) {
+                rank == "SSSランク";
+            }
+            else if (s <= 3600000) {
+                rank == "SSS+ランク";
+            }
+            else if (s <= 3800000) {
+                rank == "Legendランク";
+            }
+            else if (s <= 4000000) {
+                rank == "Epicランク";
+            }
+            else{
+                rank == "Godランク";
+            }
+            rank_display.textContent = rank;
             //追加
             let new_element = document.createElement('tr');
             new_element.className = "rowD";
