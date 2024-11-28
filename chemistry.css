@@ -36,7 +36,7 @@
 }
 
 .choice {
-    width: 90px;
+    width: 100px;
     height: 50px;
     margin: 5px;
     cursor: pointer;
@@ -312,4 +312,21 @@ table td {
 
 #rank_display{
     margin-top:-20px;
+}
+
+
+.tp{
+    width:80px;
+}
+
+.tn{
+    width:160px;
+}
+
+.tg{
+    width:60px;
+}
+
+.ta{
+    width:60px;
 }
