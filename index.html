@@ -256,7 +256,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         { id: 22, name: "硫化カドミウム", formula: "CdS", color: "黄色" },
         { id: 23, name: "硫化マンガン", formula: "MnS", color: "淡桃色" },
         { id: 24, name: "硫化亜鉛", formula: "ZnS", color: "白色" },
-        { id: 25, name: "硫化鉄", formula: "FeS", color: "無色" },
+        //{ id: 25, name: "硫化鉄", formula: "FeS", color: "無色" },
         { id: 26, name: "硫化銅", formula: "CuS", color: "黒色" },
         { id: 28, name: "二酸化硫黄", formula: "SO2", color: "無色" },
         { id: 29, name: "三酸化硫黄", formula: "SO3", color: "無色" },
@@ -521,6 +521,15 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         timer.textContent = `${m}:${s}.${ms}`;
         if (m=="59"){
             clearTimeout(timeoutID);
+            timer.textContent = "00:00.000";
+            status.textContent = "終了";
+            let str1 = correct.textContent;
+            let num1 = Number(str1.substring(2, str1.length));
+            let str2 = wrong.textContent;
+            let num2 = Number(str2.substring(2, str2.length));
+            let num3 = num1+num2;
+            solved_display.textContent = `${String(num1)}/${String(num3)}問(${String(Math.floor(num1 / (num1 + num2) * 100))}%)`
+            score_display.textContent = score.textContent;
             let score_send = score.textContent;
             console.log(score_send);
             console.log(name)
@@ -530,19 +539,11 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ name,score_send })
+                body: JSON.stringify({ name,score_send,num1,num3 })
             })
                 .then(response => response.text())
                 .then(data => {
                 });
-            timer.textContent = "00:00.000";
-            status.textContent = "終了";
-            let str1 = correct.textContent;
-            let num1 = Number(str1.substring(2,str1.length));
-            let str2 = wrong.textContent;
-            let num2 = Number(str2.substring(2,str2.length));
-            solved_display.textContent = `${String(num1)}/${String(num1+num2)}問(${String(Math.floor(num1/(num1+num2)*100))}%)`
-            score_display.textContent = score.textContent;
             let s = Number(score.textContent);
             let rank;
             //ランク決め
