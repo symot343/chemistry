@@ -281,6 +281,11 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         b.value = c;
         b.style.border = "1px solid black"
     }
+    let str = questions[36]
+    problem.textContent = str.formula;
+    problem_sub.textContent = str.name;
+    problem.style.fontSize = "30px";
+    problem_sub.style.fontSize = "20px";
     function giveQuestion(){
         givenTime = Date.now();
         //問題番号を増やす
@@ -290,19 +295,18 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         let index = Math.floor(Math.random()*questions.length);
         let question = questions[index];
         console.log(question)
-        problem.textContent = question.name;
-        problem_sub.textContent = question.formula;
+        problem.textContent = question.formula;
+        problem_sub.textContent = question.name;
         //文字サイズを指定していこう
-        if (question.name.length>=12){
-            problem.style.fontSize = "20px";
-        }else if (question.name.length>=9){
+        if (question.formula.length >= 15){
             problem.style.fontSize = "30px";
-        }else if (question.name.length>=7){
+        }else if (question.formula.length>=10){
             problem.style.fontSize = "40px";
-        }else if (question.name.length>=6){
-            problem.style.fontSize = "50px";
         }else{
             problem.style.fontSize = "60px";
+        }
+        if (question.name.length>=15){
+            problem_sub.style.fontSize = "20px";
         }
         //答えの選択肢をセット
         answer = question.color;
