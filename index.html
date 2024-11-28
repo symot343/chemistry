@@ -205,7 +205,24 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         name = "guest";
     }
     name_input.value = name;
+    //ランキング処理
     let ranking = {};
+    fetch('https://script.google.com/macros/s/AKfycbwC4EySoHPpFf-XL3HL-fZNxh7C-6kYgKtcH1QKjHC7ZZMKb0IYUJ3ZyoQ9o1YmbSvi/exec')
+            .then(response => response.json())
+            .then(data => {
+                data.sort((a, b) => b.score - a.score);
+                console.log(data); // シートのデータがJSON形式で表示されます
+                ranking = data;
+                //ここでランキングの表示までやってしまう
+                for (let i = 1; i <= 10; i++) {
+                    let the_name = document.getElementById("name" + String(i));
+                    the_name.textContent = data[i - 1].name;
+                    let the_score = document.getElementById("score" + String(i));
+                    the_score.textContent = data[i - 1].score;
+                }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    console.log(ranking)
     //問題集jsonしたい
     let questions = [
         { id: 0, name: "黒鉛", formula: "C", color: "黒色" },
