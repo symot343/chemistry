@@ -194,7 +194,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let startTime;
     let timeoutID;
     let stopTime=0;
-    let gameTime = 10000
+    let gameTime = 60000
     let givenTime = 0;
     //名前
     let name = localStorage.getItem("myname");
@@ -211,7 +211,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             .then(response => response.json())
             .then(data => {
                 data.sort((a, b) => b.score - a.score);
-                console.log(data); // シートのデータがJSON形式で表示されます
+                // シートのデータがJSON形式で表示されます
                 ranking = data;
                 //"guest"を消す
                 data = data.filter(function(item,index){
@@ -400,7 +400,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         problem_num.textContent = "第"+String(num)+"問";
         let index = Math.floor(Math.random()*questions.length);
         let question = questions[index];
-        console.log(question)
+        //console.log(question)
         problem.textContent = question.formula;
         problem_sub.textContent = question.name;
         //文字サイズを指定していこう
@@ -424,7 +424,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             choice_list.push(color_list_copy[num]);
             color_list_copy.splice(num,1);
         }
-        console.log(answer)
+        //console.log(answer)
         if (!choice_list.includes(answer)){
             choice_list[Math.floor(Math.random() * 9)] = answer;
         }
