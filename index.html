@@ -104,6 +104,71 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     </table>
 </div>
 
+<div>
+    <p>👑👑👑ランキング👑👑👑</p>
+</div>
+
+<div class="table">
+    <table>
+        <tr class="rowA">
+            <th>順位</th>
+            <th>名前</th>
+            <th>得点</th>
+        </tr>
+        <tr class="rowB">
+            <td>1</td>
+            <td id="name1">名前</td>
+            <td id="score1">得点</td>
+        </tr>
+        <tr class="rowA">
+            <td>2</td>
+            <td id="name2">名前</td>
+            <td id="score2">得点</td>
+        </tr>
+        <tr class="rowB">
+            <td>3</td>
+            <td id="name3">名前</td>
+            <td id="score3">得点</td>
+        </tr>
+        <tr class="rowA">
+            <td>4</td>
+            <td id="name4">名前</td>
+            <td id="score4">得点</td>
+        </tr>
+        <tr class="rowB">
+            <td>5</td>
+            <td id="name5">名前</td>
+            <td id="score5">得点</td>
+        </tr>
+        <tr class="rowA">
+            <td>6</td>
+            <td id="name6">名前</td>
+            <td id="score6">得点</td>
+        </tr>
+        <tr class="rowB">
+            <td>7</td>
+            <td id="name7">名前</td>
+            <td id="score7">得点</td>
+        </tr>
+        <tr class="rowA">
+            <td>8</td>
+            <td id="name8">名前</td>
+            <td id="score8">得点</td>
+        </tr>
+        <tr class="rowB">
+            <td>9</td>
+            <td id="name9">名前</td>
+            <td id="score9">得点</td>
+        </tr>
+        <tr class="rowA">
+            <td>10</td>
+            <td id="name10">名前</td>
+            <td id="score10">得点</td>
+        </tr>
+    </table>
+
+</div>
+
 <script>
     //id取得群
     let start_button = document.getElementById("start_button");
@@ -120,6 +185,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let wrong_answers = document.getElementById("wrong_answers");
     let solved_display = document.getElementById("solved_display");
     let score_display = document.getElementById("score_display");
+    let name_input = document.getElementById("name_input");
     //値定義群
     let start_status = false;
     let next_status = false;
@@ -128,8 +194,18 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let startTime;
     let timeoutID;
     let stopTime=0;
-    let gameTime = 60000
+    let gameTime = 10000
     let givenTime = 0;
+    //名前
+    let name = localStorage.getItem("myname");
+    if (name == null) {
+        name = "guest";
+    }
+    if (name == "") {
+        name = "guest";
+    }
+    name_input.value = name;
+    let ranking = {};
     //問題集jsonしたい
     let questions = [
         { id: 0, name: "黒鉛", formula: "C", color: "黒色" },
@@ -245,7 +321,8 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         "暗褐色":["#270809",0],
         "青白色":["#cee9f2",1],
         "淡黄色":["#f8e58c",1],
-        "黄金色":["#e6b422",1]
+        "黄金色":["#e6b422",1],
+        "赤橙色":["#ea5506",0]
     };
     let color_list = [];
     for (let key in color_code){
@@ -256,6 +333,8 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             alert("すでに始まっています")
         }else{
             start_status = true;
+            name = name_input.value;
+            localStorage.setItem("myname", name)
             startTime = Date.now();
             console.log(startTime)
             displayTime();
@@ -421,13 +500,14 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             clearTimeout(timeoutID);
             let score_send = score.textContent;
             console.log(score_send);
+            console.log(name)
             fetch('https://script.google.com/macros/s/AKfycbwC4EySoHPpFf-XL3HL-fZNxh7C-6kYgKtcH1QKjHC7ZZMKb0IYUJ3ZyoQ9o1YmbSvi/exec', {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ score_send })
+                body: JSON.stringify({ name,score_send })
             })
                 .then(response => response.text())
                 .then(data => {
