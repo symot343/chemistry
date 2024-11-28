@@ -302,6 +302,10 @@ table td {
     background-color: #ffffff;
 }
 
+.rowF{
+    background-color: rgb(243, 243, 243);
+}
+
 .rowE{
-    background-color: rgb(234, 234, 234);
+    background-color: "white";
 }
