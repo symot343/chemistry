@@ -201,7 +201,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     fetch('https://script.google.com/macros/s/AKfycbwC4EySoHPpFf-XL3HL-fZNxh7C-6kYgKtcH1QKjHC7ZZMKb0IYUJ3ZyoQ9o1YmbSvi/exec')
             .then(response => response.json())
             .then(data => {
-                let daily_data = data.slice(350, data.length);
+                let daily_data = data.slice(429, data.length);
                 daily_data.sort((a,b)=>b.score-a.score);
                 data.sort((a, b) => b.score - a.score);
                 // シートのデータがJSON形式で表示されます
@@ -239,9 +239,14 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
                 }
                 for (let i = 1; i <= 10; i++) {
                     let the_name = document.getElementById("dailyname" + String(i));
-                    the_name.textContent = daily_data[i - 1].name;
                     let the_score = document.getElementById("dailyscore" + String(i));
-                    the_score.textContent = daily_data[i - 1].score;
+                    if (i>daily_data.length){
+                        the_name.textContent = "-";
+                        the_score.textContent = "-";
+                    }else{
+                        the_name.textContent = daily_data[i - 1].name;
+                        the_score.textContent = daily_data[i - 1].score;
+                    }
                 }
             })
             .catch(error => console.error('Error fetching data:', error));
