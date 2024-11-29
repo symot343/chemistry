@@ -106,65 +106,27 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
 </div>
 
 <div>
-    <p>👑👑👑ランキング👑👑👑</p>
+    <p>👑👑👑デイリーランキング👑👑👑</p>
 </div>
-
 <div class="table">
-    <table>
+    <table id="daily">
         <tr class="rowA">
             <th>順位</th>
             <th>名前</th>
             <th>得点</th>
         </tr>
-        <tr class="rowE">
-            <td>1</td>
-            <td id="name1">名前</td>
-            <td id="score1">得点</td>
-        </tr>
-        <tr class="rowF">
-            <td>2</td>
-            <td id="name2">名前</td>
-            <td id="score2">得点</td>
-        </tr>
-        <tr class="rowE">
-            <td>3</td>
-            <td id="name3">名前</td>
-            <td id="score3">得点</td>
-        </tr>
-        <tr class="rowF">
-            <td>4</td>
-            <td id="name4">名前</td>
-            <td id="score4">得点</td>
-        </tr>
-        <tr class="rowE">
-            <td>5</td>
-            <td id="name5">名前</td>
-            <td id="score5">得点</td>
-        </tr>
-        <tr class="rowF">
-            <td>6</td>
-            <td id="name6">名前</td>
-            <td id="score6">得点</td>
-        </tr>
-        <tr class="rowE">
-            <td>7</td>
-            <td id="name7">名前</td>
-            <td id="score7">得点</td>
-        </tr>
-        <tr class="rowF">
-            <td>8</td>
-            <td id="name8">名前</td>
-            <td id="score8">得点</td>
-        </tr>
-        <tr class="rowE">
-            <td>9</td>
-            <td id="name9">名前</td>
-            <td id="score9">得点</td>
-        </tr>
-        <tr class="rowF">
-            <td>10</td>
-            <td id="name10">名前</td>
-            <td id="score10">得点</td>
+    </table>
+</div>
+
+<div>
+    <p>👑👑👑通期ランキング👑👑👑</p>
+</div>
+<div class="table">
+    <table id="full">
+        <tr class="rowA">
+            <th>順位</th>
+            <th>名前</th>
+            <th>得点</th>
         </tr>
     </table>
 
@@ -188,6 +150,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let score_display = document.getElementById("score_display");
     let rank_display = document.getElementById("rank_display");
     let name_input = document.getElementById("name_input");
+    let daily = document.getElementById("daily");
     //値定義群
     let start_status = false;
     let next_status = false;
@@ -198,6 +161,32 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let stopTime=0;
     let gameTime = 60000
     let givenTime = 0;
+    //ランキングの表を作る
+    function createTable(prefix,index){
+        let new_element = document.createElement('tr');
+        if (index%2==0){
+            new_element.className = "rowE";
+        }else{
+            new_element.className = "rowF";
+        }
+        let new_element_r = document.createElement('td');
+        let new_element_n = document.createElement('td');
+        let new_element_s = document.createElement('td');
+        new_element_r.textContent = String(index);
+        new_element_n.id = prefix+"name"+String(index);
+        new_element_n.textContent = "名前";
+        new_element_s.id = prefix +"score"+ String(index);
+        new_element_s.textContent = "得点";
+        new_element.appendChild(new_element_r);
+        new_element.appendChild(new_element_n);
+        new_element.appendChild(new_element_s);
+        let subject = document.getElementById(prefix);
+        subject.appendChild(new_element);
+    }
+    for (let i=1;i<=10;i++){
+        createTable("daily",i);
+        createTable("full",i);
+    }
     //名前
     let name = localStorage.getItem("myname");
     if (name == null) {
@@ -212,12 +201,17 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     fetch('https://script.google.com/macros/s/AKfycbwC4EySoHPpFf-XL3HL-fZNxh7C-6kYgKtcH1QKjHC7ZZMKb0IYUJ3ZyoQ9o1YmbSvi/exec')
             .then(response => response.json())
             .then(data => {
+                let daily_data = data.slice(350, data.length);
+                daily_data.sort((a,b)=>b.score-a.score);
                 data.sort((a, b) => b.score - a.score);
                 // シートのデータがJSON形式で表示されます
                 ranking = data;
                 //"guest"を消す
                 data = data.filter(function(item,index){
                     if (item.name!="guest") return true;
+                })
+                daily_data = daily_data.filter(function (item, index) {
+                    if (item.name != "guest") return true;
                 })
                 //同一人物を消す
                 let name_list = [];
@@ -227,13 +221,27 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
                         return true;
                     }
                 })
+                name_list = [];
+                daily_data = daily_data.filter(function (item, index) {
+                    if (!(name_list.includes(item.name))) {
+                        name_list.push(item.name)
+                        return true;
+                    }
+                })
                 console.log(data)
+                console.log(daily_data)
                 //ここでランキングの表示までやってしまう
                 for (let i = 1; i <= 10; i++) {
-                    let the_name = document.getElementById("name" + String(i));
+                    let the_name = document.getElementById("fullname" + String(i));
                     the_name.textContent = data[i - 1].name;
-                    let the_score = document.getElementById("score" + String(i));
+                    let the_score = document.getElementById("fullscore" + String(i));
                     the_score.textContent = data[i - 1].score;
+                }
+                for (let i = 1; i <= 10; i++) {
+                    let the_name = document.getElementById("dailyname" + String(i));
+                    the_name.textContent = daily_data[i - 1].name;
+                    let the_score = document.getElementById("dailyscore" + String(i));
+                    the_score.textContent = daily_data[i - 1].score;
                 }
             })
             .catch(error => console.error('Error fetching data:', error));
