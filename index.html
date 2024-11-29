@@ -646,6 +646,11 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             else{
                 rank = "Godランク";
             }
+            if (rank=="Godランク"){
+                for (let i=1;i<=((s-4600000)/500000);i++){
+                    rank+="👑";
+                }
+            }
             rank_display.textContent = rank;
             //追加
             let new_element = document.createElement('tr');
