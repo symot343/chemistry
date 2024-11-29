@@ -219,6 +219,14 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
                 data = data.filter(function(item,index){
                     if (item.name!="guest") return true;
                 })
+                //同一人物を消す
+                let name_list = [];
+                data = data.filter(function(item,index){
+                    if (!(name_list.includes(item.name))){
+                        name_list.push(item.name)
+                        return true;
+                    }
+                })
                 console.log(data)
                 //ここでランキングの表示までやってしまう
                 for (let i = 1; i <= 10; i++) {
