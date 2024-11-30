@@ -330,7 +330,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         { id: 74, name: "クロム酸カリウム", formula: "K2CrO4", color: "黄色" },
         { id: 75, name: "クロム酸イオン", formula: "CrO42-", color: "黄色" },
         { id: 76, name: "クロム酸銀", formula: "Ag2CrO4", color: "赤褐色" },
-        { id: 77, name: "クロム酸バリウム", formula: "BaCrO4", color: "淡黄色" },
+        { id: 77, name: "クロム酸バリウム", formula: "BaCrO4", color: "黄色" },
         { id: 78, name: "二クロム酸イオン", formula: "Cr2O7-", color: "赤橙色" },
         { id: 79, name: "マンガン", formula: "Mn", color: "銀白色" },
         { id: 80, name: "酸化マンガン(IV)", formula: "MnO2", color: "黒色" },
@@ -482,6 +482,11 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         let prob_num = nm.substring(1, nm.length - 1);
         if (guess == answer) {
             let time = Date.now()-givenTime;
+            //a問目をbミリ秒で回答したら
+            //5000000(基礎点)✖️(a^0.3)(回答数)÷(b^(0.6✖️(1-b÷100000))(速答ボーナス)
+            //10問目は1.9倍、30問目は2.8倍、50問目は3.2倍
+            //3秒をベースとすると
+            //2秒で1.2倍、1秒で1.7倍、0.5秒で2.7倍、0.1秒で15倍
             time = time**(1-(time/100000));
             let add = Math.floor(1000*(5000/(time**0.6))*(prob_num**(0.3)));
             console.log(add);
@@ -669,6 +674,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             new_element.appendChild(new_element_s);
             new_element.appendChild(new_element_g);
             new_element.appendChild(new_element_a);
+            wrong_answers.appendChild(new_element);
             alert("ゲームオーバー、結果を確認してね")
             gameover_status = true;
         }
