@@ -173,6 +173,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         let new_element_n = document.createElement('td');
         let new_element_s = document.createElement('td');
         new_element_r.textContent = String(index);
+        new_element_r.id = prefix + "rank" + String(index);
         new_element_n.id = prefix+"name"+String(index);
         new_element_n.textContent = "名前";
         new_element_s.id = prefix +"score"+ String(index);
@@ -183,12 +184,16 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         let subject = document.getElementById(prefix);
         subject.appendChild(new_element);
     }
-    for (let i=1;i<=10;i++){
+    for (let i=1;i<=11;i++){
         createTable("full",i);
     }
-    for (let i=1;i<=20;i++){
+    for (let i=1;i<=21;i++){
         createTable("daily",i);
     }
+    let dailyrank21 = document.getElementById("dailyrank21");
+    dailyrank21.textContent = "最下位";
+    let fullrank11 = document.getElementById("fullrank11");
+    fullrank11.textContent = "最下位";
     //名前
     let name = localStorage.getItem("myname");
     if (name == null) {
@@ -207,6 +212,15 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
                 let daily_data = data.slice(749, data.length);
                 daily_data.sort((a,b)=>b.score-a.score);
                 data.sort((a, b) => b.score - a.score);
+                //最下位だけ書いちゃう
+                let dailyname21 = document.getElementById("dailyname21");
+                let dailyscore21 = document.getElementById("dailyscore21");
+                let fullname11 = document.getElementById("fullname11");
+                let fullscore11 = document.getElementById("fullscore11");
+                dailyname21.textContent = daily_data[daily_data.length-1].name;
+                dailyscore21.textContent = daily_data[daily_data.length - 1].score;
+                fullname11.textContent = data[data.length-1].name;
+                fullscore11.textContent = data[data.length-1].score;
                 // シートのデータがJSON形式で表示されます
                 ranking = data;
                 //"guest"を消す
