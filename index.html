@@ -209,7 +209,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     fetch('https://script.google.com/macros/s/AKfycbwC4EySoHPpFf-XL3HL-fZNxh7C-6kYgKtcH1QKjHC7ZZMKb0IYUJ3ZyoQ9o1YmbSvi/exec')
             .then(response => response.json())
             .then(data => {
-                let daily_data = data.slice(996, data.length);
+                let daily_data = data.slice(1350, data.length);
                 daily_data.sort((a,b)=>b.score-a.score);
                 data.sort((a, b) => b.score - a.score);
                 //最下位だけ書いちゃう
