@@ -170,7 +170,9 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let gameTime = 60000;
     let givenTime = 0;
     let wrong_sound = new Audio("wrong.mp3");
+    let correct_sound = new Audio("correct.mp3");
     wrong_sound.volume = 0.05;
+    correct_sound.volume = 0.05;
     //ランキングの表を作る
     function createTable(prefix,index){
         let new_element = document.createElement('tr');
@@ -507,6 +509,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         let nm = problem_num.textContent;
         let prob_num = nm.substring(1, nm.length - 1);
         if (guess == answer) {
+            correct_sound.play();
             let time = Date.now()-givenTime;
             //a問目をbミリ秒で回答したら
             //5000000(基礎点)✖️(a^0.3)(回答数)÷(b^(0.6✖️(1-b÷100000))(速答ボーナス)
@@ -542,8 +545,9 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             wrong_sound.play();
             let text = problem_sub.textContent+"は"+answer;
             //遊ぶ
-            let gobi_list = ["ですよ","だぜ","なんだよ","だよ","でした","なり",
-                "でござる","でございます","だはやく覚えろたこ"
+            let gobi_list = ["ですよ","なんだよ","なり",
+                "でござる","でございます","だはやく覚えろたこ",
+                "だよーん"
             ];
             text += gobi_list[Math.floor(Math.random()*gobi_list.length)];
             let utterance = new SpeechSynthesisUtterance(text);
