@@ -172,7 +172,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let wrong_sound = new Audio("wrong.mp3");
     let correct_sound = new Audio("correct.mp3");
     wrong_sound.volume = 0.05;
-    correct_sound.volume = 0.05;
+    correct_sound.volume = 0.30;
     //ランキングの表を作る
     function createTable(prefix,index){
         let new_element = document.createElement('tr');
@@ -545,7 +545,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             wrong_sound.play();
             let text = problem_sub.textContent+"は"+answer;
             //遊ぶ
-            let gobi_list = ["ですよ","なんだよ","なり",
+            let gobi_list = ["ですよ","だよ","なり",
                 "でござる","でございます","だはやく覚えろたこ",
                 "だよーん"
             ];
