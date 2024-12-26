@@ -221,7 +221,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     fetch('https://script.google.com/macros/s/AKfycbwC4EySoHPpFf-XL3HL-fZNxh7C-6kYgKtcH1QKjHC7ZZMKb0IYUJ3ZyoQ9o1YmbSvi/exec')
             .then(response => response.json())
             .then(data => {
-                let daily_data = data.slice(1350, data.length);
+                let daily_data = data.slice(1701, data.length);
                 daily_data.sort((a,b)=>b.score-a.score);
                 data.sort((a, b) => b.score - a.score);
                 //最下位だけ書いちゃう
@@ -543,11 +543,19 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         }
         else {
             wrong_sound.play();
-            let text = problem_sub.textContent+"は"+answer;
+            let text = problem_sub.textContent+"は"+answer+"だ、";
             //遊ぶ
-            let gobi_list = ["ですよ","だよ","なり",
-                "でござる","でございます","だはやく覚えろたこ",
-                "だよーん"
+            let gobi_list = ["身の程をわきまえろ。てめえの知識如きで挑戦しようとすんな",
+            "それで覚えたつもりか？もっと勉強してからこい",
+            "そういう詰めの甘いところがダメなんだよお前は",
+            "いい加減にしろよカス。お前の存在自体が学年の足を引っ張ってんだよ",
+            "この程度の質問に答えられないお前に生きてる価値はない",
+            "次間違えたら指詰めるってここで誓えや",
+            "わかんねぇとか言ってる場合じゃねんだよ",
+            "次同じ間違えしたら腹掻っ捌いて闇市に流すからな",
+            "覚えられない頭なんて無駄だから切り落とせ",
+            "他のやつみたいに体に油かけて燃やしたろか？",
+            "やめたきゃやめろ。お前はその程度の人間なんだ"
             ];
             text += gobi_list[Math.floor(Math.random()*gobi_list.length)];
             let utterance = new SpeechSynthesisUtterance(text);
