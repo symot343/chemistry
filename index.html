@@ -53,6 +53,10 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     style="width:64px;height:32px;bottom:5px;position:relative">
 </div>
 
+<div class="show_answer">
+    <p id="show_answer"></p>
+</div>
+
 <div class="choice_buttons">
     <p>【選択肢】</p>
     <input type="button" onclick="choiceButtonClick(this.id)" id="choice1" class="choice" value="赤紫色">
@@ -133,6 +137,8 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
 </div>
 
 <script>
+    //apiを導入
+    const synth = window.speechSynthesis;
     //id取得群
     let start_button = document.getElementById("start_button");
     let quit_button = document.getElementById("quit_button");
@@ -151,6 +157,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let rank_display = document.getElementById("rank_display");
     let name_input = document.getElementById("name_input");
     let daily = document.getElementById("daily");
+    let show_answer = document.getElementById("show_answer");
     //値定義群
     let start_status = false;
     let next_status = false;
@@ -159,8 +166,10 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let startTime;
     let timeoutID;
     let stopTime=0;
-    let gameTime = 60000
+    let gameTime = 60000;
     let givenTime = 0;
+    let wrong_sound = new Audio("wrong.mp3");
+    wrong_sound.volume = 0.05;
     //ランキングの表を作る
     function createTable(prefix,index){
         let new_element = document.createElement('tr');
@@ -408,6 +417,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     function nextButtonClick(){
         if (next_status){
             next_status = false;
+            show_answer.textContent = "";
             //出題
             giveQuestion();
         }else{
@@ -528,6 +538,23 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             giveQuestion();
         }
         else {
+            wrong_sound.play();
+            let text = problem_sub.textContent+"は"+answer;
+            //遊ぶ
+            let gobi_list = ["ですよ","だぜ","なんだよ","だよ","でした","なり",
+                "でござる","でございます","だはやく覚えろたこ"
+            ];
+            text += gobi_list[Math.floor(Math.random()*gobi_list.length)];
+            let utterance = new SpeechSynthesisUtterance(text);
+            synth.speak(utterance);
+            show_answer.textContent = answer;
+            console.log(color_code[answer][0]);
+            show_answer.style.backgroundColor = color_code[answer][0];
+            if (color_code[answer][1]==1){
+                show_answer.style.color = "black";
+            }else{
+                show_answer.style.color = "white";
+            }
             let add = Math.floor(20000*(prob_num**0.8)*(-1));
             console.log(add);
             score.textContent = String(ns+add);
@@ -550,8 +577,9 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             new_element.appendChild(new_element_g);
             new_element.appendChild(new_element_a);
             wrong_answers.appendChild(new_element);
-            let send = "不正解、答えは" + answer + "でした";
-            alert(send);
+            //石の要望
+            //let send = "不正解、答えは" + answer + "でした";
+            //alert(send);
             next_status = true;
         }
     }
