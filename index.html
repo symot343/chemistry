@@ -559,6 +559,8 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             ];
             text += gobi_list[Math.floor(Math.random()*gobi_list.length)];
             let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 1.4;
+            utterance.pitch = 0.8;
             synth.speak(utterance);
             show_answer.textContent = answer;
             console.log(color_code[answer][0]);
