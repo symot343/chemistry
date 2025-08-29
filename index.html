@@ -364,8 +364,15 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         { id: 81, name: "過マンガン酸カリウム", formula: "KMnO4", color: "黒紫色" },
         { id: 82, name: "過マンガン酸イオン", formula: "MnO4-", color: "赤紫色" },
         { id: 83, name: "水酸化アルミニウム", formula: "Al(OH)3", color: "白色" },
-    ]
-    //ここで全ての色の名前をリストアップ
+        { id: 84, name: "コバルトイオン", formula: "Co^2+", color: "淡赤色" },
+        { id: 85, name: "銅イオン", formula: "Cu^2+", color: "青色" },
+        { id: 86, name: "無水物の銅イオン", formula: "Cu^2+", color: "無色" },
+        { id: 87, name: "無水物のコバルトイオン", formula: "Co^2+", color: "コバルトブルー" },
+        { id: 88, name: "クロムイオン", formula: "Cr^3+", color: "暗緑色" },
+        { id: 89, name: "硫化スズ(Ⅱ)", formula: "SnS+", color: "暗灰色" },
+        { id: 90, name: "硫化スズ(Ⅳ)", formula: "SnS2", color: "黄色" },
+        { id: 91, name: "時間経過した硫化水銀(Ⅱ)", formula: "HgS", color: "朱色" },
+]
     let color_code = {
         "黒色":["#000000",0],
         "無色":["#ffffff",1],
@@ -395,7 +402,11 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         "青白色":["#cee9f2",1],
         "淡黄色":["#f8e58c",1],
         "黄金色":["#e6b422",1],
-        "赤橙色":["#ea5506",0]
+        "赤橙色":["#ea5506",0],
+        "淡赤色":["#fadce9",1],
+        "コバルトブルー":["#2863ab",0],
+        "暗緑色":["#00502e",0],
+        "朱色":["#ed514e",0],
     };
     let color_list = [];
     for (let key in color_code){
