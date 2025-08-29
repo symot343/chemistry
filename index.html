@@ -581,10 +581,6 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
                 utterance.pitch = -100;
                 synth.speak(utterance);
             }
-            let utterance = new SpeechSynthesisUtterance(text);
-            utterance.rate = 1.4;
-            utterance.pitch = -100;
-            synth.speak(utterance);
             show_answer.textContent = answer;
             console.log(color_code[answer][0]);
             show_answer.style.backgroundColor = color_code[answer][0];
