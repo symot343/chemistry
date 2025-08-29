@@ -28,6 +28,10 @@
 </div>
 
 <div class="start_button">
+    <label>
+        <input type="checkbox" id="wrong_voice_toggle" checked>
+        間違えた時の音声を流す
+    </label>
     <input type="button" id="start_button" value="Start"
     style="width:64px;height:32px;bottom:5px;position:relative">
     <p>
@@ -570,6 +574,13 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             "やめたきゃやめろ。お前はその程度の人間なんだ"
             ];
             text += gobi_list[Math.floor(Math.random()*gobi_list.length)];
+            let wrong_voice_toggle = document.getElementById("wrong_voice_toggle");
+            if (wrong_voice_toggle && wrong_voice_toggle.checked) {
+                let utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 1.4;
+                utterance.pitch = -100;
+                synth.speak(utterance);
+            }
             let utterance = new SpeechSynthesisUtterance(text);
             utterance.rate = 1.4;
             utterance.pitch = -100;
