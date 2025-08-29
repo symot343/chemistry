@@ -111,7 +111,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
 </div>
 
 <div>
-    <p>👑👑👑デイリーランキング👑👑👑</p>
+    <p>【👑👑👑デイリーランキング👑👑👑】</p>
 </div>
 <div class="table">
     <table id="daily">
@@ -124,7 +124,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
 </div>
 
 <div>
-    <p>👑👑👑通期ランキング👑👑👑</p>
+    <p>【👑👑👑通期ランキング👑👑👑】</p>
 </div>
 <div class="table">
     <table id="full">
@@ -280,6 +280,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             })
             .catch(error => console.error('Error fetching data:', error));
     //問題集jsonしたい
+    //ここで全ての色の名前をリストアップ
     let questions = [
         { id: 0, name: "黒鉛", formula: "C", color: "黒色" },
         { id: 1, name: "ダイヤモンド", formula: "C", color: "無色" },
@@ -404,7 +405,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
         "黄金色":["#e6b422",1],
         "赤橙色":["#ea5506",0],
         "淡赤色":["#fadce9",1],
-        "コバルトブルー":["#2863ab",0],
+        "コバルト青":["#2863ab",0],
         "暗緑色":["#00502e",0],
         "朱色":["#ed514e",0],
     };
@@ -571,7 +572,7 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
             text += gobi_list[Math.floor(Math.random()*gobi_list.length)];
             let utterance = new SpeechSynthesisUtterance(text);
             utterance.rate = 1.4;
-            utterance.pitch = 0.8;
+            utterance.pitch = -100;
             synth.speak(utterance);
             show_answer.textContent = answer;
             console.log(color_code[answer][0]);
