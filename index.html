@@ -181,6 +181,27 @@ style="padding:10px;margin-bottom:10px;border:1px solid #333333">
     let correct_sound = new Audio("correct.mp3");
     wrong_sound.volume = 0.05;
     correct_sound.volume = 0.30;
+    window.addEventListener('DOMContentLoaded', () => {
+    // 効果音
+    const soundToggle = document.getElementById("sound_toggle");
+    const soundSaved = localStorage.getItem("sound_toggle");
+    if (soundSaved !== null) {
+        soundToggle.checked = soundSaved === "true";
+    }
+    soundToggle.addEventListener("change", () => {
+        localStorage.setItem("sound_toggle", soundToggle.checked);
+    });
+
+    // 間違えた時の音声
+    const wrongVoiceToggle = document.getElementById("wrong_voice_toggle");
+    const wrongVoiceSaved = localStorage.getItem("wrong_voice_toggle");
+    if (wrongVoiceSaved !== null) {
+        wrongVoiceToggle.checked = wrongVoiceSaved === "true";
+    }
+    wrongVoiceToggle.addEventListener("change", () => {
+        localStorage.setItem("wrong_voice_toggle", wrongVoiceToggle.checked);
+    });
+    });
     //ランキングの表を作る
     function createTable(prefix,index){
         let new_element = document.createElement('tr');
